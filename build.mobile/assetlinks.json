@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.wayssoft.onedelivery",
+        "sha256_cert_fingerprints": ["C6:14:28:23:1A:BF:21:61:3D:3A:20:48:6D:82:AF:19:66:DD:4B:0A:E8:6A:70:AC:19:FF:60:55:3B:FB:EF:39"]
+      }
+    }]
