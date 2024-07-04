@@ -313,11 +313,11 @@ $link = 'd.php?loja='.$loja;
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>cataloguei shop</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.3'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.3'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.3'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.3'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.3'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
@@ -362,6 +362,10 @@ $link = 'd.php?loja='.$loja;
     <div style="width: 100%; height: 60px;"></div>
     <div class="b-main-container-produtos b-main-centro-total">
         <div style="width: 600px;" class="display">
+
+            <div class="b-main-bag-container-voltar">
+                <a href="../d.php?loja=<?php echo $loja; ?>"><i class='bx bx-left-arrow-alt'></i></a>
+            </div>
 
             <!-- alerta de erros -->
             <div style="display: <?php if($_error_ == false){ echo('none'); } ?>;" class="warning">
@@ -463,6 +467,7 @@ $link = 'd.php?loja='.$loja;
                     </div>
                 </div>
             </div>
+            <div style="width: 100%; height: 80px;"></div>
             <!-- Total -->
 
 
@@ -491,7 +496,7 @@ $link = 'd.php?loja='.$loja;
         </div>
     </div>
 </body>
-<script src='../assets/js/main.js'></script>
+<script src='../assets/js/main.js?v=2.3'></script>
 <?php 
 if(isset($_GET['produto'])){
     echo "<script type='text/javascript'>
