@@ -1,9 +1,11 @@
 <?php 
 include('../req/conex.php');
+include('../model/settings.php');
 $noShopCart = false;
 $_error_ = false;
 $_error_msg_ = '';
 $_SUCCESS = false;
+$total_pedido = 0;
 
 if(!isset($_GET['loja'])){
     //$_error_ = True;
@@ -12,6 +14,7 @@ if(!isset($_GET['loja'])){
 
 if(!isset($_COOKIE['authorization_id'])) {$noShopCart = true;}
 if(!isset($_COOKIE['authorization_type'])) {$noShopCart = true;}
+
 
 // verifica se foi clicado no botão excluir
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -57,6 +60,10 @@ if($noShopCart == false){
         $id_venda = $venda['id'];
         $id_endereco = $venda['endereco_id'];
         $id_empresa = $venda['empresa_id'];
+
+        $settings = new Settings($id_empresa);
+        // verifica se tem taxa de entrega 
+        $total_pedido = $total_pedido + $settings->get__taxa_entrega_geral();
     }
 }
 
@@ -297,6 +304,7 @@ if(isset($_POST['bt_finalizar'])) {
 }
 // Links para pop-menu
 $link = 'd.php?loja='.$loja;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -305,11 +313,11 @@ $link = 'd.php?loja='.$loja;
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>cataloguei shop</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.0'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
@@ -391,10 +399,25 @@ $link = 'd.php?loja='.$loja;
             </div>
              <!-- Fim Endereço de entrega -->
 
+            <!-- Taxa entrega -->
+            <p style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-title">Entrega:</p>
+            <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-entrega"> 
+                <div class="bag-itens">
+                    <div class="bag-itens-desc">
+                        <label>Taxa entrega:</label>
+                        <p class="preco">R$ <?php echo number_format($settings->get__taxa_entrega_geral(),2,",","."); ?></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim Taxa entrega -->
+
+
             <!-- Itens do pedido -->
             <p style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-title">Itens do pedido</p>
             <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-itens">
-                <?php foreach($venda_detalhe as $row){?>
+                <?php foreach($venda_detalhe as $row){
+                    $total_pedido = $total_pedido + $row[3];
+                ?>
                 <form action="bag.php?id_iten_cancel=<?php echo $row[0]; ?>" method="POST">    
                 <div class="bag-itens">
                     <div class="bag-itens-desc">
@@ -428,6 +451,21 @@ $link = 'd.php?loja='.$loja;
                 <label class="bt-radio" for="CARTAO_DEBITO">Cartão de debito</label>
             </div>
             <!-- Fim Tipo de pagamento -->
+
+
+            <!-- Total -->
+            <p style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-title">Total pedido:</p>
+            <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-entrega"> 
+                <div class="bag-itens">
+                    <div class="bag-itens-desc">
+                        <label>Total:</label>
+                        <p class="preco">R$ <?php echo number_format($total_pedido,2,",","."); ?></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Total -->
+
+
             <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-bt-finalizar">    
                 <button style="width: 220px; float: right; margin-top: 10px;" class="button-65" name="bt_finalizar" type="submit">Finalizar pedido</button>
                 <button class="button-cancelar-pedido-bag" name="bt_cancelar_pedido" type="button" onclick="cancela_pedido_bag('<?php echo $id_venda; ?>')"><i class='bx bx-trash'></i></button>
