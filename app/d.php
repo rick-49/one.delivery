@@ -124,6 +124,8 @@ $link = '../d.php?loja='.$loja;
     <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.0'>
     <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.0'>
     <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.banner.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.categoria.css'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
@@ -192,6 +194,48 @@ $link = '../d.php?loja='.$loja;
     <div class="b-main-separador"></div>
     <div class="b-main-container-produtos b-main-centro-total">
         <div class="display">
+
+
+            <!-- banner -->
+            <div class="app">        
+                <ul class="hs">
+                        <li class="item">
+                            <div onclick="historico()" class="img_itens_carrosel" style="background-image: url('assets/img/banner/heineken-gelada.png')">
+                
+                            </div>             
+                        </li>
+
+                        <li class="item">
+                            <div onclick="historico()" class="img_itens_carrosel" style="background-image: url('assets/img/banner/budweiser.png')">
+                
+                            </div>             
+                        </li>
+
+                </ul>                
+            </div>
+            <!-- banner -->
+
+            <div style="width: 100%; height: 30px; padding-left: 20px; padding-top: 12px;"><p>Categoria</p></div>
+            <!-- categoria -->
+            <div class="app-categoria">        
+                <ul class="hs-categoria">
+                        <li class="item-categoria">
+                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/cervejas.png')">                
+                            </div>    
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Cervejas</label></div>        
+                        </li>
+
+                        <li class="item-categoria">
+                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/refrigerantes.png')">
+                            </div> 
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Refrigerantes</label></div>            
+                        </li>
+
+                </ul>                
+            </div>
+            <!-- categoria -->
+
+
             <?php foreach($produtos as $row){
                 $path_img_produto = $row[1];
                 $path_img_produto = "https://app.cataloguei.shop/painel/".$path_img_produto;
