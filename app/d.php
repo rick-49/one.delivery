@@ -120,12 +120,12 @@ $link = '../d.php?loja='.$loja;
     <meta property="og:locale" content="pt_BR" />
     <!-- FIM preview -->
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.banner.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.categoria.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.banner.css?v=1.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.categoria.css?v=1.4'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
@@ -219,6 +219,13 @@ $link = '../d.php?loja='.$loja;
             <!-- categoria -->
             <div class="app-categoria">        
                 <ul class="hs-categoria">
+
+                        <li class="item-categoria">
+                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/promicao.png')">                
+                            </div>    
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Promoções</label></div>        
+                        </li>
+
                         <li class="item-categoria">
                             <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/cervejas.png')">                
                             </div>    

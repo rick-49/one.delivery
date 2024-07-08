@@ -496,7 +496,7 @@ $link = 'd.php?loja='.$loja;
         </div>
     </div>
 </body>
-<script src='../assets/js/main.js?v=2.3'></script>
+<script src='../assets/js/main.js?v=2.4'></script>
 <?php 
 if(isset($_GET['produto'])){
     echo "<script type='text/javascript'>

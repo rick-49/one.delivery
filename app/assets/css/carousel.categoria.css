@@ -27,8 +27,8 @@
   
   .hs-categoria {
     display: grid;
-    grid-gap: calc(var(--gutter) / 2);
-    grid-template-columns: repeat(2, calc(120px - var(--gutter) * 2));
+    grid-gap: calc(var(--gutter) / 3);
+    grid-template-columns: repeat(3, calc(120px - var(--gutter) * 2));
     grid-template-rows: minmax(150px, 1fr);
 
     
