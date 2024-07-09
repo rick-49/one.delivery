@@ -219,7 +219,7 @@ $link = '../d.php?loja='.$loja;
         <div class="display">
 
             <!-- alerta loja fechada -->
-            <div style="display: <?php if($result_horarios['status'] == 'aberto'){ echo('none'); } ?>;" class="warning">
+            <div style="display: <?php if($result_horarios['status'] == 'aberto_'){ echo('none'); } ?>;" class="warning">
                 <i class='bx bx-time-five'></i>
                 <p>A loja esta fechada abrira em <?php echo($result_horarios['tempo_restante_para_abrir']); ?></p>
             </div>
