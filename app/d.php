@@ -17,6 +17,29 @@ if($quantidade == 1) {
     $_error_ = True;
     die("error não foi encontrado a pagina<p><a href=\"log-in.php\">documentação</a></p>");
 }
+
+
+
+# include na nova versão do codigo em class
+include('model/settings.php');
+include('model/utilities.php');
+
+# Verifica se a loja esta aberta ou fechada
+$settings = new Settings($id_empresa);
+$horarios = $settings->getHorario(obterDiaDaSemana());
+
+if($horarios[0]['horario_ativo'] == TRUE)
+{
+    $result_horarios = verificarHorarioLoja($horarios);
+}else{
+    $result_horarios=array(
+        'status' => 'aberto',
+        'tempo_restante_para_abrir' => 'N/A'
+    );
+}
+# fim da ferificação da loja aberta ou fechada
+
+
 // verifica se tem o usuario logado
 if(!isset($_COOKIE['authorization_id'])){$login_user=false;}else{
     if(!isset($_COOKIE['authorization_type'])){$login_user=false;}{
@@ -120,10 +143,12 @@ $link = '../d.php?loja='.$loja;
     <meta property="og:locale" content="pt_BR" />
     <!-- FIM preview -->
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.6'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.6'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.6'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.6'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.banner.css?v=1.6'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.categoria.css?v=1.6'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
@@ -192,6 +217,61 @@ $link = '../d.php?loja='.$loja;
     <div class="b-main-separador"></div>
     <div class="b-main-container-produtos b-main-centro-total">
         <div class="display">
+
+            <!-- alerta loja fechada -->
+            <div style="display: <?php if($result_horarios['status'] == 'aberto'){ echo('none'); } ?>;" class="warning">
+                <i class='bx bx-time-five'></i>
+                <p>A loja esta fechada abrira em <?php echo($result_horarios['tempo_restante_para_abrir']); ?></p>
+            </div>
+
+
+            <!-- banner -->
+            <div class="app">        
+                <ul class="hs">
+                        <li class="item">
+                            <div onclick="historico()" class="img_itens_carrosel" style="background-image: url('assets/img/banner/heineken-gelada.png')">
+                
+                            </div>             
+                        </li>
+
+                        <li class="item">
+                            <div onclick="historico()" class="img_itens_carrosel" style="background-image: url('assets/img/banner/budweiser.png')">
+                
+                            </div>             
+                        </li>
+
+                </ul>                
+            </div>
+            <!-- banner -->
+
+            <div style="width: 100%; height: 30px; padding-left: 20px; padding-top: 12px;"><p>Categoria</p></div>
+            <!-- categoria -->
+            <div class="app-categoria">        
+                <ul class="hs-categoria">
+
+                        <li class="item-categoria">
+                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/promicao.png')">                
+                            </div>    
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Promoções</label></div>        
+                        </li>
+
+                        <li class="item-categoria">
+                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/cervejas.png')">                
+                            </div>    
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Cervejas</label></div>        
+                        </li>
+
+                        <li class="item-categoria">
+                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/refrigerantes.png')">
+                            </div> 
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Refrigerantes</label></div>            
+                        </li>
+
+                </ul>                
+            </div>
+            <!-- categoria -->
+
+
             <?php foreach($produtos as $row){
                 $path_img_produto = $row[1];
                 $path_img_produto = "https://app.cataloguei.shop/painel/".$path_img_produto;

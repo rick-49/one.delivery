@@ -82,3 +82,18 @@ function openExternalLink(url_){
 function openPageMenuMobile(page){
     window.location.href = page;
 }
+
+
+// Adiciona um estado ao histórico do navegador
+history.pushState(null, null, location.href);
+
+// Adiciona um evento ao 'popstate' para capturar a ação de voltar
+window.onpopstate = function () {
+    history.pushState(null, null, location.href);
+};
+
+// Adiciona um evento 'beforeunload' para prevenir navegação
+window.addEventListener('beforeunload', function (event) {
+    event.preventDefault();
+    event.returnValue = '';
+});
