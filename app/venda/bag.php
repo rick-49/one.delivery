@@ -1,6 +1,12 @@
 <?php 
 include('../req/conex.php');
+
+# include na nova versão do codigo em class
 include('../model/settings.php');
+include('../model/utilities.php');
+
+
+
 $noShopCart = false;
 $_error_ = false;
 $_error_msg_ = '';
@@ -269,15 +275,37 @@ function sendWhatsappEmpresa($mysqli,$value): bool {
 
 // finalizar pedido
 if(isset($_POST['bt_finalizar'])) {
+    // verifica se a loja esta aberta
+
+
     // verifica se foi informado o tipo de pagamento
-    if(!isset($_POST['tipo_pagamento'])){
+    if(!isset($_POST['tipo_pagamento']))
+    {
         $_error_ = true;
         $_error_msg_ = 'Não foi informado o tipo de pagamento';
-    } if ($noSelectEndereco == true){
+    } 
+
+
+    if ($noSelectEndereco == true){
         $_error_ = true;
         $_error_msg_ = 'Selecione o Endereco de entrega';
-    } else{
-        if ($_error_ == false){
+    }
+
+    // verifica se a loja esta aberta
+    $horarios = $settings->getHorario(obterDiaDaSemana());
+    if($horarios[0]['horario_ativo'] == TRUE)
+    {
+        $result_horarios = verificarHorarioLoja($horarios);
+        if($result_horarios['status'] == 'fechado')
+        {
+            $_error_ = true;
+            $_error_msg_ = 'A loja está fechada e não pode receber pedidos';                     
+        }
+    }     
+
+    if ($_error_ == false)
+    {
+
             $tipo_pagamento = $_POST['tipo_pagamento'];
             $sql = "UPDATE venda SET status=?, tipo_pagamento=? WHERE id = ?"; // Você pode ajustar a condição WHERE conforme necessário
             $stmt = $mysqli->prepare($sql);
@@ -299,7 +327,7 @@ if(isset($_POST['bt_finalizar'])) {
             // envia mesame para o whatsapp do usuario e para empresa
             sendWhatsappEmpresa($mysqli,$id_venda);
             sendWhatsappUser($mysqli,$id_venda);
-        }
+        
     }
 }
 // Links para pop-menu
@@ -368,7 +396,7 @@ $link = 'd.php?loja='.$loja;
             </div>
 
             <!-- alerta de erros -->
-            <div style="display: <?php if($_error_ == false){ echo('none'); } ?>;" class="warning">
+            <div style="display: <?php if($_error_ == false){ echo('none'); } ?>;" class="warning-no-margin">
                 <img src="../assets/img/alert.png" />
                 <p><?php echo($_error_msg_); ?></p>
             </div>
