@@ -63,6 +63,9 @@ if(!isset($_COOKIE['authorization_id'])){$login_user=false;}else{
 // verifica os produtos
 if ($_error_ == False){
     
+    // mosta toda a lista de produto
+    $all_list = TRUE;
+
     // Definindo o número de registros por página
     $registros_por_pagina = 10;
 
@@ -71,9 +74,57 @@ if ($_error_ == False){
     $offset = ($pagina_atual - 1) * $registros_por_pagina;
 
     // Consulta para obter o total de registros
-    $sql_total = "SELECT COUNT(*) AS total FROM produto WHERE estoque > 0 AND id_empresa = ".$id_empresa;
+    if(isset($_GET['cat']))
+    {
+        $sql_total = "SELECT COUNT(*) AS total FROM produto WHERE estoque > 0 AND id_empresa = ".$id_empresa." AND estoque > 0 AND id_categoria = ".$_GET['cat']."";
+        $all_list = FALSE;
+    }
+
+    if(isset($_GET['promo']))
+    {
+        $sql_total = "SELECT COUNT(*) AS total FROM produto WHERE estoque > 0 AND id_empresa = ".$id_empresa." AND estoque > 0 AND promocao = 'S'";
+        $all_list = FALSE;
+    }   
+
+
+    if(isset($_POST['search']))
+    {
+        $sql_total = "SELECT COUNT(*) AS total FROM produto WHERE estoque > 0 AND id_empresa = ".$id_empresa." AND estoque > 0 AND upper(nome) LIKE '%".$search."%'";
+        $all_list = FALSE;
+        $pagina_atual = 1;
+        $offset = ($pagina_atual - 1) * $registros_por_pagina;
+    }
+
+    if($all_list == TRUE)
+    {
+        $sql_total = "SELECT COUNT(*) AS total FROM produto WHERE estoque > 0 AND id_empresa = ".$id_empresa;
+    }
+
     $result_total = $mysqli->query($sql_total) or die("Falha na execução do código SQL: " . $mysqli->error);
     $total_registros = $result_total->fetch_assoc()['total'];
+
+
+    if(isset($_GET['cat'])){
+        $search = $_POST['search'];
+        $search = strtoupper($search);
+        $sql_code = "SELECT id,path_imagem,codigo_barras,nome,descricao,preco,estoque,promocao,preco_promocional FROM produto WHERE id_empresa = ".$id_empresa." AND estoque > 0 AND id_categoria = ".$_GET['cat']."";
+        $sql_code = $sql_code . " LIMIT $registros_por_pagina OFFSET $offset";
+        $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
+        $quantidade = $sql_query->num_rows;
+        $produtos = $sql_query->fetch_all();
+        $all_list = FALSE;
+    } 
+
+    if(isset($_GET['promo'])){
+        $search = $_POST['search'];
+        $search = strtoupper($search);
+        $sql_code = "SELECT id,path_imagem,codigo_barras,nome,descricao,preco,estoque,promocao,preco_promocional FROM produto WHERE id_empresa = ".$id_empresa." AND estoque > 0 AND promocao = 'S'";
+        $sql_code = $sql_code . " LIMIT $registros_por_pagina OFFSET $offset";
+        $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
+        $quantidade = $sql_query->num_rows;
+        $produtos = $sql_query->fetch_all();
+        $all_list = FALSE;
+    }    
 
     if(isset($_POST['search'])){
         $search = $_POST['search'];
@@ -83,14 +134,16 @@ if ($_error_ == False){
         $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
         $quantidade = $sql_query->num_rows;
         $produtos = $sql_query->fetch_all();
-    }else{
+    }
+    
+    if($all_list == TRUE){
         $sql_code = "SELECT id,path_imagem,codigo_barras,nome,descricao,preco,estoque,promocao,preco_promocional FROM produto WHERE estoque > 0 AND id_empresa = ".$id_empresa;
         $sql_code = $sql_code . " LIMIT $registros_por_pagina OFFSET $offset";
         $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
         $quantidade = $sql_query->num_rows;
         $produtos = $sql_query->fetch_all();
         $search ='';
-    }  
+    } 
     // Calculando o número total de páginas
     $total_paginas = ceil($total_registros / $registros_por_pagina);    
     
@@ -246,17 +299,18 @@ $link = '../d.php?loja='.$loja;
                 <ul class="hs-categoria">
 
                         <li class="item-categoria">
-                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/promicao.png')">                
+                            <div onclick="window.location.href = 'd.php?loja=<?php echo $loja; ?>&promo=S';" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/promicao.png')">                
                             </div>    
                             <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Promoções</label></div>        
                         </li>
                         <?php foreach($produto_grupo as $row){?>
                         <li class="item-categoria">
-                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/cervejas.png')">                
+                            <div onclick="window.location.href = 'd.php?loja=<?php echo $loja; ?>&cat=<?php echo $row['id']; ?>';" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/cervejas.png')">                
                             </div>    
                             <div class="container_desc_carrosel-categoria b-main-centro-total"><label><?php echo($row['descricao']); ?></label></div>        
                         </li>                       
-                        <?php } ?>        
+                        <?php } ?> 
+
                 </ul>                
             </div>
             <!-- categoria -->
