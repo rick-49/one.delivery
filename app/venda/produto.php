@@ -309,7 +309,7 @@ if(isset($_POST['btadd']))
 <body>
 
     <!-- alerta -->
-    <div style="display: <?php if($_error_ == FALSE){ echo('none'); } ?>; margin-top: -0px;" class="warning-no-margin">
+    <div style="display: <?php if($_error_ == FALSE){ echo('none'); } ?>;" class="warning-no-margin">
         <img src="../assets/img/alert.png" />
         <p><?php echo($_error_msg); ?></p>
     </div>

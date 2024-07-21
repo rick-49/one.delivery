@@ -253,7 +253,7 @@ if(isset($_POST['valida_cod'])) {
                 if(!isset($_GET['redirect'])){header("Location: ../painel/vendas.php");}
                 else{
                   $redirect_url = urldecode($_GET['redirect']);
-                  header("Location: ../".$redirect_url);
+                  header("Location: ".$redirect_url);
                 }                
             } else {
                 echo "Erro na atualização de dados: " . $stmt->error;
