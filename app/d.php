@@ -124,6 +124,14 @@ if(isset($_COOKIE['authorization_id'])){
     $total_venda = 0;
 }
 
+
+# lista os grupos de produtos
+$sql_code = "SELECT * FROM produto_categoria WHERE id_empresa=".$id_empresa;
+$sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
+$qtd_produto_grupo = $sql_query->num_rows;
+$qtd_produto_grupo = $qtd_produto_grupo + 1;
+$produto_grupo = $sql_query->fetch_all(MYSQLI_ASSOC);
+
 // Links para pop-menu
 $link = '../d.php?loja='.$loja;
 ?>
@@ -157,6 +165,14 @@ $link = '../d.php?loja='.$loja;
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <!-- -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <style>
+        .hs-categoria {
+            display: grid;
+            grid-gap: calc(var(--gutter) / <?php echo $qtd_produto_grupo; ?>);
+            grid-template-columns: repeat(<?php echo $qtd_produto_grupo; ?>, calc(120px - var(--gutter) * 2));
+            grid-template-rows: minmax(150px, 1fr);
+        }
+    </style>
 </head>
 <body>
     <div class="b-main-container-topo b-main-shadow-topo-home">
@@ -234,19 +250,13 @@ $link = '../d.php?loja='.$loja;
                             </div>    
                             <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Promoções</label></div>        
                         </li>
-
+                        <?php foreach($produto_grupo as $row){?>
                         <li class="item-categoria">
                             <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/cervejas.png')">                
                             </div>    
-                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Cervejas</label></div>        
-                        </li>
-
-                        <li class="item-categoria">
-                            <div onclick="historico()" class="img_itens_carrosel-categoria" style="background-image: url('assets/img/categorias/refrigerantes.png')">
-                            </div> 
-                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label>Refrigerantes</label></div>            
-                        </li>
-
+                            <div class="container_desc_carrosel-categoria b-main-centro-total"><label><?php echo($row['descricao']); ?></label></div>        
+                        </li>                       
+                        <?php } ?>        
                 </ul>                
             </div>
             <!-- categoria -->
