@@ -143,12 +143,12 @@ $link = '../d.php?loja='.$loja;
     <meta property="og:locale" content="pt_BR" />
     <!-- FIM preview -->
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.6'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.6'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.6'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.6'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.banner.css?v=1.6'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.categoria.css?v=1.6'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.7'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.7'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.7'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.7'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.banner.css?v=1.7'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/carousel.categoria.css?v=1.7'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
@@ -223,26 +223,6 @@ $link = '../d.php?loja='.$loja;
                 <i class='bx bx-time-five'></i>
                 <p>A loja esta fechada abrira em <?php echo($result_horarios['tempo_restante_para_abrir']); ?></p>
             </div>
-
-
-            <!-- banner -->
-            <div class="app">        
-                <ul class="hs">
-                        <li class="item">
-                            <div onclick="historico()" class="img_itens_carrosel" style="background-image: url('assets/img/banner/heineken-gelada.png')">
-                
-                            </div>             
-                        </li>
-
-                        <li class="item">
-                            <div onclick="historico()" class="img_itens_carrosel" style="background-image: url('assets/img/banner/budweiser.png')">
-                
-                            </div>             
-                        </li>
-
-                </ul>                
-            </div>
-            <!-- banner -->
 
             <div style="width: 100%; height: 30px; padding-left: 20px; padding-top: 12px;"><p>Categoria</p></div>
             <!-- categoria -->
