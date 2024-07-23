@@ -170,6 +170,14 @@ if(isset($_POST['bt_cupom'])) {
         $ds_cupom = $sql_query->fetch_assoc();
         $id_cupom   = $ds_cupom['id'];
         $cupom_taxa_desconto = $ds_cupom['taxa_desconto'];
+        $qtd_cupom = $ds_cupom['qtd_cupom'];
+
+        // verifica se o cupom ainda tem quantidade
+        if($qtd_cupom <= 0)
+        {
+            $_error_ = true;
+            $_error_msg_ = 'Cumpo informado já não é mais valido'; 
+        }
     }else{
         $_error_ = true;
         $_error_msg_ = 'Cumpo informado não é valido';        
@@ -387,11 +395,11 @@ $link = 'd.php?loja='.$loja;
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Finalizar pedido</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.4'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.4'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.4'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.4'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.5'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.5'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.5'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.5'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.6'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->

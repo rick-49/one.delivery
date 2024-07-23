@@ -204,7 +204,7 @@ $link = '../d.php?loja='.$loja;
     <meta property="og:locale" content="pt_BR" />
     <!-- FIM preview -->
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.7'>
+    <link rel='stylesheet' type='text/css' media='screen' href='assets/css/main.css?v=1.8'>
     <link rel='stylesheet' type='text/css' media='screen' href='assets/css/alerts.css?v=1.7'>
     <link rel='stylesheet' type='text/css' media='screen' href='assets/css/buttons.css?v=1.7'>
     <link rel='stylesheet' type='text/css' media='screen' href='assets/css/menu.css?v=1.7'>
