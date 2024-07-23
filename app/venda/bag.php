@@ -387,11 +387,11 @@ $link = 'd.php?loja='.$loja;
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Finalizar pedido</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.3'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.3'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.3'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.3'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.3'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/buttons.css?v=2.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/checkbox.css?v=2.4'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/menu.css?v=2.4'>
     <!--boxicon-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--sweetalert-->
