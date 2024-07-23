@@ -198,7 +198,17 @@ root {
     margin-top: 5px; margin-left: 10px;
     font-family: "Roboto", sans-serif;}  
 
-
+.b-main-bag-container-entrega .bag-itens .bag-itens-desc .text-input-cupom{
+    position: relative;
+    float: left;
+    width: calc(100% - 70px);
+    height: 45px;
+    border-radius: 10px;
+    border: 1px solid #E8E9E7;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    margin-right: 5px;
+    padding-left: 5px;} 
 
 
 .b-main-bag-container-entrega{width: 100%; height: auto; box-shadow: 0px 10px 15px -15px rgba(0,0,0,0.1); padding: 8px; border-radius: 8px; background-color: #FFFFFF;}

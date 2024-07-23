@@ -66,6 +66,9 @@ if($noShopCart == false){
         $id_venda = $venda['id'];
         $id_endereco = $venda['endereco_id'];
         $id_empresa = $venda['empresa_id'];
+        $ativa_cupom = $venda['ativa_cupom'];
+        $cod_cupom = $venda['cod_cupom'];
+        $cupom_taxa_desconto = $venda['taxa_desconto_cupom'];
 
         $settings = new Settings($id_empresa);
         // verifica se tem taxa de entrega 
@@ -149,6 +152,49 @@ if(isset($_POST['bt_cancela_iten'])) {
 }
 
 
+
+// CUPOM
+if(isset($_POST['bt_cupom'])) {
+    if(!isset($_POST['cod_cupom'])){
+        $_error_ = True;
+        die("error não foi passado a variavel id_iten_cancel <p><a href=\"log-in.php\">documentação</a></p>");    
+    }else{$cod_cupom = $_POST['cod_cupom'];}
+
+
+    // busca o cupom na base de dados
+    $sql_code = "SELECT * FROM cupom WHERE cod_cupom = '".$cod_cupom."' AND id_empresa = ".$id_empresa;
+    $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
+    $quantidade = $sql_query->num_rows;
+    if($quantidade > 0)
+    {
+        $ds_cupom = $sql_query->fetch_assoc();
+        $id_cupom   = $ds_cupom['id'];
+        $cupom_taxa_desconto = $ds_cupom['taxa_desconto'];
+    }else{
+        $_error_ = true;
+        $_error_msg_ = 'Cumpo informado não é valido';        
+    }
+
+    if($_error_ != true)
+    {
+        $sql = "UPDATE venda SET id_cupom=?, ativa_cupom=?, cod_cupom=?, taxa_desconto_cupom=? WHERE id = ?";
+        $stmt = $mysqli->prepare($sql);
+        if (!$stmt) {
+            echo "Erro na preparação da consulta: " . $conn->error;
+            return -1;
+        }
+        $ativa_cupom = 'S';
+        $stmt->bind_param("sssss", $id_cupom, $ativa_cupom, $cod_cupom, $cupom_taxa_desconto, $id_venda);
+        // Executa a consulta de atualização
+        if ($stmt->execute()) {
+            //echo "Dados atualizados com sucesso!";
+        } else {
+            echo "Erro na atualização de dados: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+    
+}
 
 
 // busca os itens da venda
@@ -339,7 +385,7 @@ $link = 'd.php?loja='.$loja;
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>cataloguei shop</title>
+    <title>Finalizar pedido</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/main.css?v=2.3'>
     <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/alerts.css?v=2.3'>
@@ -396,7 +442,7 @@ $link = 'd.php?loja='.$loja;
             </div>
 
             <!-- alerta de erros -->
-            <div style="display: <?php if($_error_ == false){ echo('none'); } ?>;" class="warning-no-margin">
+            <div style="display: <?php if($_error_ == false){ echo('none'); } ?>; margin-top:5px;" class="warning-no-margin">
                 <img src="../assets/img/alert.png" />
                 <p><?php echo($_error_msg_); ?></p>
             </div>
@@ -485,14 +531,36 @@ $link = 'd.php?loja='.$loja;
             <!-- Fim Tipo de pagamento -->
 
 
+            <!-- Cupom -->
+            <p style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-title">Cupom:</p>
+            <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-entrega"> 
+                <div class="bag-itens">
+                    <div class="bag-itens-desc">
+                        <input class="text-input-cupom" type="text" name="cod_cupom" id="cod_cupom" value="<?php echo $cod_cupom ?>" placeholder="">
+                        <button class="button-cancelar-pedido-bag"  style="float: right; margin-top: -0px; height: 45px;" name="bt_cupom" type="submit"><i class='bx bx-check'></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim Cupom -->            
+
             <!-- Total -->
+            <?php 
+                // Calcula o valor do desconto
+                $valor_desconto = ($total_pedido * $cupom_taxa_desconto) / 100;
+                // Calcula o valor total após aplicar o desconto
+                $total_pedido = $total_pedido - $valor_desconto;
+            ?>
             <p style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-title">Total pedido:</p>
             <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-entrega"> 
                 <div class="bag-itens">
                     <div class="bag-itens-desc">
+                        <label>Desconto:</label>
+                        <p class="preco">R$ <?php echo number_format($valor_desconto,2,",","."); ?></p>
+                    </div>
+                    <div class="bag-itens-desc">
                         <label>Total:</label>
                         <p class="preco">R$ <?php echo number_format($total_pedido,2,",","."); ?></p>
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <div style="width: 100%; height: 80px;"></div>
