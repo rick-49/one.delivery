@@ -71,8 +71,8 @@ if($noShopCart == false){
         $cupom_taxa_desconto = $venda['taxa_desconto_cupom'];
 
         $settings = new Settings($id_empresa);
-        // verifica se tem taxa de entrega 
-        $total_pedido = $total_pedido + $settings->get__taxa_entrega_geral();
+        // verifica se tem taxa de entrega  
+        $total_entrega = $settings->get__taxa_entrega_geral();
     }
 }
 
@@ -557,6 +557,7 @@ $link = 'd.php?loja='.$loja;
                 $valor_desconto = ($total_pedido * $cupom_taxa_desconto) / 100;
                 // Calcula o valor total após aplicar o desconto
                 $total_pedido = $total_pedido - $valor_desconto;
+                $total_pedido = $total_pedido + $total_entrega;
             ?>
             <p style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-title">Total pedido:</p>
             <div style="display: <?php if($noShopCart == true){ echo('none'); }; if($_SUCCESS == true){ echo('none'); } ?>;" class="b-main-bag-container-entrega"> 
